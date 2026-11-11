@@ -135,7 +135,6 @@ python scripts/gait_check.py --task Microduck-Walk-V6-Play --checkpoint weights/
 python scripts/record_policy.py --task Microduck-Walk-V6-Play --checkpoint weights/flat_v6/model_2999.pt   # overview video
 ```
 
-`jobs/` contains the Slurm scripts used to train and evaluate on an HPC cluster (L40S GPUs).
 
 ## 🗂️ Project structure
 
@@ -153,7 +152,6 @@ microduck_lab/
                           #   needs an exported walker at assets/walk_v2_policy.pt (not included)
 assets/                   # MicroDuck MJCF + converted USD
 scripts/                  # evaluation, recording and debugging tools
-jobs/                     # Slurm training / evaluation scripts
 weights/                  # final pretrained policies
 media/                    # GIFs and figures
 ```

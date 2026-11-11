@@ -158,3 +158,21 @@ for _id, _cls in (("Microduck-Walk-V7", "MicroduckWalkV7EnvCfg"), ("Microduck-Wa
             "default_agent": "rsl_rl",
         },
     )
+
+# Final walkers under descriptive names (same configs as above).
+for _id, _mod, _cls, _agent in (
+    ("Microduck-Walk-Flat", "walk_v5", "MicroduckWalkV5EnvCfg", "MicroduckWalkV6PPORunnerCfg"),
+    ("Microduck-Walk-Flat-Play", "walk_v5", "MicroduckWalkV5EnvCfg_PLAY", "MicroduckWalkV6PPORunnerCfg"),
+    ("Microduck-Walk-Obstacle", "walk_v7", "MicroduckWalkV7EnvCfg", "MicroduckWalkV7PPORunnerCfg"),
+    ("Microduck-Walk-Obstacle-Play", "walk_v7", "MicroduckWalkV7EnvCfg_PLAY", "MicroduckWalkV7PPORunnerCfg"),
+):
+    gym.register(
+        id=_id,
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        disable_env_checker=True,
+        kwargs={
+            "env_cfg_entry_point": f"{__name__}.{_mod}:{_cls}",
+            "rsl_rl_cfg_entry_point": f"{__name__}.agents:{_agent}",
+            "default_agent": "rsl_rl",
+        },
+    )

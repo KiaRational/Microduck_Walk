@@ -12,7 +12,7 @@
 
 <img src="media/flat_walk.gif" width="48%"/> <img src="media/obstacle_walk.gif" width="48%"/>
 
-*Left: walking on flat ground (v6). Right: walking over ramps, platforms and studded mats with a depth camera (v7).*
+*Left: walking on flat ground. Right: walking over ramps, platforms and studded mats with a depth camera.*
 
 </div>
 
@@ -24,8 +24,8 @@
 This project trains walking policies for it **entirely in simulation** with **PPO** on thousands of robots in parallel
 in **NVIDIA Isaac Sim 6.2 / Isaac Lab 3.0**.
 
-- 🦿 **Flat-surface walker (v6)**: velocity tracking (forward/backward, sideways, turning) plus head-pose control.
-- 🧗 **Obstacle-course walker (v7)**: the same walker with a **head-mounted depth camera** and a **CNN encoder**,
+- 🦿 **Flat-surface walker**: velocity tracking (forward/backward, sideways, turning) plus head-pose control.
+- 🧗 **Obstacle-course walker**: the same walker with a **head-mounted depth camera** and a **CNN encoder**,
   trained on a procedural course of stairs, ramps, platforms, studded mats and metal plates, with a terrain curriculum.
 - ⚙️ **Realistic servos**: the XL330 actuator model from **BAM** (*Better Actuator Models*) runs as an Isaac Lab
   explicit actuator, so the policy learns with realistic torque and friction limits.
@@ -38,15 +38,15 @@ in **NVIDIA Isaac Sim 6.2 / Isaac Lab 3.0**.
 </div>
 
 1. 👀 **Observe**: IMU (angular velocity and gravity), joint positions and velocities, last action, velocity
-   command, head-pose command, and for v7 a **32×24 depth image** from the head camera.
-2. 🧩 **Decide**: a small **CNN** encodes the depth image (v7). Its features and the robot state feed a
+   command, head-pose command, and for the obstacle walker a **32×24 depth image** from the head camera.
+2. 🧩 **Decide**: a small **CNN** encodes the depth image (obstacle walker). Its features and the robot state feed a
    **[512, 256, 128] MLP** policy trained with **PPO**.
 3. 🏃 **Act**: joint targets go to the BAM servo model, and **Isaac Sim PhysX** simulates the motion.
 4. 🔁 **Repeat**: new observations arrive. Thousands of robots train in parallel on a single GPU.
 
 ## 🎬 Results
 
-### 🟩 Flat surface (v6)
+### 🟩 Flat surface
 
 <div align="center">
 <img src="media/flat_all_directions.gif" width="95%"/>
@@ -54,7 +54,7 @@ in **NVIDIA Isaac Sim 6.2 / Isaac Lab 3.0**.
 *One robot under each fixed command: forward, backward, left, right, turn left, turn right.*
 </div>
 
-### 🟫 Obstacle surface (v7)
+### 🟫 Obstacle surface
 
 <div align="center">
 <img src="media/obstacle_course.gif" width="70%"/>
@@ -66,14 +66,14 @@ in **NVIDIA Isaac Sim 6.2 / Isaac Lab 3.0**.
 
 | Policy | Robots × time | Falls | Command tracking score* | Turning (±0.8 rad/s) | Forward/backward (±0.3 m/s) |
 |---|---|---|---|---|---|
-| 🟩 **v6 flat** | 256 × 60 s | **0** (0 % of robots) | 63.2 / 100 | ✅ ~100 % | ~0.17 m/s achieved |
-| 🟫 **v7 obstacle** | 256 × 60 s | 0.55 per robot-minute (34 % fell at least once) | 60.6 / 100 | ✅ ~100 % | ~0.17 m/s achieved |
+| 🟩 **Flat** | 256 × 60 s | **0** (0 % of robots) | 63.2 / 100 | ✅ ~100 % | ~0.17 m/s achieved |
+| 🟫 **Obstacle** | 256 × 60 s | 0.55 per robot-minute (34 % fell at least once) | 60.6 / 100 | ✅ ~100 % | ~0.17 m/s achieved |
 
 <sub>*Score = % of robots still standing × % of the commanded velocity reached, averaged over 7 fixed commands
 (stand, forward, backward, left, right, turn left, turn right), from <code>scripts/eval_dirs.py</code>.
 Sideways walking (±0.2 m/s) is the weakest skill of both policies (~20 % tracking).</sub>
 
-| | v6 flat | v7 obstacle |
+| | Flat | Obstacle |
 |---|---|---|
 | Parallel robots | 4096 | 4096 |
 | PPO iterations | 3000 | 4000 |
@@ -85,12 +85,12 @@ Only the **final** checkpoints are included:
 
 ```
 weights/
-├── flat_v6/        # Microduck-Walk-V6, iteration 2999
+├── flat/           # flat-ground walker, iteration 2999
 │   ├── model_2999.pt          # RSL-RL checkpoint (resume / play)
 │   ├── policy.pt              # TorchScript actor (deployment)
 │   ├── policy.onnx(+ .data)   # ONNX actor (deployment)
 │   └── params/                # exact env.yaml + agent.yaml used for training
-└── obstacle_v7/    # Microduck-Walk-V7, iteration 3999 (depth camera + CNN)
+└── obstacle/       # obstacle-course walker, iteration 3999 (depth camera + CNN)
     ├── model_3999.pt
     ├── policy.pt
     ├── policy.onnx(+ .data)
@@ -114,25 +114,25 @@ pip install -e . --no-deps          # or: uv pip install -e . --no-deps
 
 ```bash
 # flat ground
-isaaclab play --rl_library rsl_rl --task Microduck-Walk-V6-Play --checkpoint weights/flat_v6/model_2999.pt --viz kit
+isaaclab play --rl_library rsl_rl --task Microduck-Walk-Flat-Play --checkpoint weights/flat/model_2999.pt --viz kit
 # obstacle course with depth camera
-isaaclab play --rl_library rsl_rl --task Microduck-Walk-V7-Play --checkpoint weights/obstacle_v7/model_3999.pt --viz kit
+isaaclab play --rl_library rsl_rl --task Microduck-Walk-Obstacle-Play --checkpoint weights/obstacle/model_3999.pt --viz kit
 ```
 
 ### 3. Train your own 🏋️
 
 ```bash
-isaaclab train --rl_library rsl_rl --task Microduck-Walk-V6 --num_envs 4096 --max_iterations 3000   # flat
-isaaclab train --rl_library rsl_rl --task Microduck-Walk-V7 --num_envs 4096 --max_iterations 4000   # obstacles
+isaaclab train --rl_library rsl_rl --task Microduck-Walk-Flat --num_envs 4096 --max_iterations 3000   # flat
+isaaclab train --rl_library rsl_rl --task Microduck-Walk-Obstacle --num_envs 4096 --max_iterations 4000   # obstacles
 ```
 
 ### 4. Evaluate 📏
 
 ```bash
-python scripts/eval_dirs.py  --task Microduck-Walk-V6-Play --checkpoint weights/flat_v6/model_2999.pt   # 7 fixed commands
-python scripts/eval_walk.py  --task Microduck-Walk-V6-Play --checkpoint weights/flat_v6/model_2999.pt --num_envs 256 --seconds 60   # falls
-python scripts/gait_check.py --task Microduck-Walk-V6-Play --checkpoint weights/flat_v6/model_2999.pt   # foot contact stats
-python scripts/record_policy.py --task Microduck-Walk-V6-Play --checkpoint weights/flat_v6/model_2999.pt   # overview video
+python scripts/eval_dirs.py  --task Microduck-Walk-Flat-Play --checkpoint weights/flat/model_2999.pt   # 7 fixed commands
+python scripts/eval_walk.py  --task Microduck-Walk-Flat-Play --checkpoint weights/flat/model_2999.pt --num_envs 256 --seconds 60   # falls
+python scripts/gait_check.py --task Microduck-Walk-Flat-Play --checkpoint weights/flat/model_2999.pt   # foot contact stats
+python scripts/record_policy.py --task Microduck-Walk-Flat-Play --checkpoint weights/flat/model_2999.pt   # overview video
 ```
 
 
@@ -143,29 +143,19 @@ microduck_lab/
 ├── robot.py              # MicroDuck articulation (HOME pose, PD and BAM servo variants)
 ├── bam.py                # XL330 servo model (BAM) as an Isaac Lab explicit actuator for PhysX
 └── tasks/
-    ├── walk_v5.py        # reference MicroDuck velocity task (rewards, observations, head-pose command, mirror loss)
-    ├── walk_v7.py        # + head depth camera, CNN encoder, stairs/ramps/props terrain + curriculum
+    ├── walk_*.py         # walking tasks: flat ground (velocity + head-pose tracking, mirror loss) and
+    │                     #   obstacle course (+ head depth camera, CNN encoder, terrain curriculum)
     ├── course.py         # procedural obstacle course (stairs, ramps, platforms, mats, plates, props)
     ├── gait_mdp.py       # gait rewards: air time, foot clearance, swing height, foot slip, upright, posture
     ├── agents.py         # PPO / RSL-RL runner configs (MLP and CNN models)
     └── nav_env_cfg.py    # (experimental) depth-camera goal navigation on top of a frozen walker;
-                          #   needs an exported walker at assets/walk_v2_policy.pt (not included)
+                          #   needs an exported walking policy (not included)
 assets/                   # MicroDuck MJCF + converted USD
 scripts/                  # evaluation, recording and debugging tools
 weights/                  # final pretrained policies
 media/                    # GIFs and figures
 ```
 
-## 🛤️ Version history
-
-| Version | What changed |
-|---|---|
-| v1 | Isaac Lab velocity task on flat ground: learned a fast foot shuffle |
-| v2 | Gait rewards ported from the official MicroDuck task, walk-over obstacle course |
-| v3–v4 | Reference reward recipe, BAM XL330 servo model |
-| v5 | Full port of the reference MicroDuck velocity task (actuated head, head-pose command, mirror loss) |
-| **v6** | **v5 trained on Isaac Sim PhysX: final flat-ground walker** |
-| **v7** | **v6 + head depth camera + CNN + stairs/ramps/props with terrain curriculum: final obstacle walker** |
 
 ## 🙏 Acknowledgements
 

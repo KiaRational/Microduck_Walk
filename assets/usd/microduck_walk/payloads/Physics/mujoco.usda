@@ -1,0 +1,411 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "MuJoCo USD Converter v0.6.1"
+    }
+    defaultPrim = "microduck"
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./physics.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "microduck"
+{
+    over "Geometry"
+    {
+        over "trunk_base"
+        {
+            over "imu" (
+                prepend apiSchemas = ["MjcSiteAPI"]
+            )
+            {
+                uniform int mjc:group = 3
+            }
+
+            over "yaw2roll"
+            {
+                over "hip_l"
+                {
+                    over "upper_leg_left"
+                    {
+                        over "leg"
+                        {
+                            over "ankle_left"
+                            {
+                                over "left_foot" (
+                                    prepend apiSchemas = ["MjcSiteAPI"]
+                                )
+                                {
+                                    uniform int mjc:group = 3
+                                }
+
+                                over "left_ankle" (
+                                    delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                                    prepend apiSchemas = ["MjcJointAPI"]
+                                )
+                                {
+                                    uniform double mjc:damping = 0.053
+                                }
+                            }
+
+                            over "left_knee" (
+                                delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                                prepend apiSchemas = ["MjcJointAPI"]
+                            )
+                            {
+                                uniform double mjc:damping = 0.053
+                            }
+                        }
+
+                        over "left_hip_pitch" (
+                            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                            prepend apiSchemas = ["MjcJointAPI"]
+                        )
+                        {
+                            uniform double mjc:damping = 0.053
+                        }
+                    }
+
+                    over "left_hip_roll" (
+                        delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                        prepend apiSchemas = ["MjcJointAPI"]
+                    )
+                    {
+                        uniform double mjc:damping = 0.053
+                    }
+                }
+
+                over "left_hip_yaw" (
+                    delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                    prepend apiSchemas = ["MjcJointAPI"]
+                )
+                {
+                    uniform double mjc:damping = 0.053
+                }
+            }
+
+            over "neck"
+            {
+                over "neck_pitch_1"
+                {
+                    over "yaw_roll_motion"
+                    {
+                        over "jaw_soft"
+                        {
+                            over "head_camera" (
+                                prepend apiSchemas = ["MjcSiteAPI"]
+                            )
+                            {
+                                uniform int mjc:group = 3
+                            }
+
+                            over "tof" (
+                                prepend apiSchemas = ["MjcSiteAPI"]
+                            )
+                            {
+                                uniform int mjc:group = 3
+                            }
+
+                            over "head_imu" (
+                                prepend apiSchemas = ["MjcSiteAPI"]
+                            )
+                            {
+                                uniform int mjc:group = 3
+                            }
+
+                            over "mouth_tip" (
+                                prepend apiSchemas = ["MjcSiteAPI"]
+                            )
+                            {
+                                uniform int mjc:group = 3
+                            }
+
+                            over "head_roll" (
+                                delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                                prepend apiSchemas = ["MjcJointAPI"]
+                            )
+                            {
+                                uniform double mjc:damping = 0.053
+                            }
+                        }
+
+                        over "head_yaw" (
+                            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                            prepend apiSchemas = ["MjcJointAPI"]
+                        )
+                        {
+                            uniform double mjc:damping = 0.053
+                        }
+                    }
+
+                    over "head_pitch" (
+                        delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                        prepend apiSchemas = ["MjcJointAPI"]
+                    )
+                    {
+                        uniform double mjc:damping = 0.053
+                    }
+                }
+
+                over "neck_pitch" (
+                    delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                    prepend apiSchemas = ["MjcJointAPI"]
+                )
+                {
+                    uniform double mjc:damping = 0.053
+                }
+            }
+
+            over "bearing_roll"
+            {
+                over "hip_l_2"
+                {
+                    over "upper_leg_right"
+                    {
+                        over "leg_2"
+                        {
+                            over "ankle_right"
+                            {
+                                over "right_foot" (
+                                    prepend apiSchemas = ["MjcSiteAPI"]
+                                )
+                                {
+                                    uniform int mjc:group = 3
+                                }
+
+                                over "right_ankle" (
+                                    delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                                    prepend apiSchemas = ["MjcJointAPI"]
+                                )
+                                {
+                                    uniform double mjc:damping = 0.053
+                                }
+                            }
+
+                            over "right_knee" (
+                                delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                                prepend apiSchemas = ["MjcJointAPI"]
+                            )
+                            {
+                                uniform double mjc:damping = 0.053
+                            }
+                        }
+
+                        over "right_hip_pitch" (
+                            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                            prepend apiSchemas = ["MjcJointAPI"]
+                        )
+                        {
+                            uniform double mjc:damping = 0.053
+                        }
+                    }
+
+                    over "right_hip_roll" (
+                        delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                        prepend apiSchemas = ["MjcJointAPI"]
+                    )
+                    {
+                        uniform double mjc:damping = 0.053
+                    }
+                }
+
+                over "right_hip_yaw" (
+                    delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+                    prepend apiSchemas = ["MjcJointAPI"]
+                )
+                {
+                    uniform double mjc:damping = 0.053
+                }
+            }
+        }
+    }
+
+    over "Physics"
+    {
+        def MjcActuator "left_hip_yaw"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/yaw2roll/left_hip_yaw>
+        }
+
+        def MjcActuator "left_hip_roll"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/yaw2roll/hip_l/left_hip_roll>
+        }
+
+        def MjcActuator "left_hip_pitch"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/yaw2roll/hip_l/upper_leg_left/left_hip_pitch>
+        }
+
+        def MjcActuator "left_knee"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/yaw2roll/hip_l/upper_leg_left/leg/left_knee>
+        }
+
+        def MjcActuator "left_ankle"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/yaw2roll/hip_l/upper_leg_left/leg/ankle_left/left_ankle>
+        }
+
+        def MjcActuator "neck_pitch"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/neck/neck_pitch>
+        }
+
+        def MjcActuator "head_pitch"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/neck/neck_pitch_1/head_pitch>
+        }
+
+        def MjcActuator "head_yaw"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/neck/neck_pitch_1/yaw_roll_motion/head_yaw>
+        }
+
+        def MjcActuator "head_roll"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/neck/neck_pitch_1/yaw_roll_motion/jaw_soft/head_roll>
+        }
+
+        def MjcActuator "right_hip_yaw"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/bearing_roll/right_hip_yaw>
+        }
+
+        def MjcActuator "right_hip_roll"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/bearing_roll/hip_l_2/right_hip_roll>
+        }
+
+        def MjcActuator "right_hip_pitch"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/bearing_roll/hip_l_2/upper_leg_right/right_hip_pitch>
+        }
+
+        def MjcActuator "right_knee"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/bearing_roll/hip_l_2/upper_leg_right/leg_2/right_knee>
+        }
+
+        def MjcActuator "right_ankle"
+        {
+            uniform double[] mjc:biasPrm = [0, -0.55, 0, 0, 0, 0, 0, 0, 0, 0]
+            uniform token mjc:biasType = "affine"
+            uniform double mjc:ctrlRange:max = 10
+            uniform double mjc:ctrlRange:min = -10
+            uniform double mjc:forceRange:max = 0.96
+            uniform double mjc:forceRange:min = -0.96
+            uniform double[] mjc:gainPrm = [0.55, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            custom rel mjc:target
+            append rel mjc:target = </microduck/Geometry/trunk_base/bearing_roll/hip_l_2/upper_leg_right/leg_2/ankle_right/right_ankle>
+        }
+    }
+}
+

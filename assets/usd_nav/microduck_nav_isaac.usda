@@ -1,0 +1,27 @@
+#usda 1.0
+(
+    defaultPrim = "microduck_nav"
+    subLayers = [
+        @./microduck_nav/microduck_nav.usda@
+    ]
+)
+
+over "microduck_nav"
+{
+    over "Geometry"
+    {
+        over "trunk_base"
+        {
+            over "body_collision"
+            {
+                token visibility = "invisible"
+            }
+
+            over "head_collision"
+            {
+                token visibility = "invisible"
+            }
+        }
+    }
+}
+

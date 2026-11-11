@@ -1,0 +1,15 @@
+[project]
+name = "microduck_lab"
+version = "0.1.0"
+description = "Microduck walking + navigation in Isaac Lab"
+requires-python = ">=3.11"
+
+[project.entry-points."isaaclab.tasks"]
+microduck_lab = "microduck_lab.tasks"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["microduck_lab*"]
